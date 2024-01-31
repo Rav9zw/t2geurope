@@ -1,0 +1,35 @@
+version: '3'
+services:
+    php:
+        container_name: t2geurope
+        build:
+            context: ./php
+            args:
+                TIMEZONE: Europe/Warsaw
+        ports:
+            - "80:80"
+            - "5173:5173"
+        volumes:
+            - ../:/var/www/
+        networks:
+            - laravel-network
+        depends_on:
+            - db
+    db:
+        image: mysql:8.2.0
+        container_name: db
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: t2geurope
+            MYSQL_ROOT_PASSWORD: secret
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks:
+            - laravel-network
+
+volumes:
+    mysql-data:
+networks:
+    laravel-network:
+
