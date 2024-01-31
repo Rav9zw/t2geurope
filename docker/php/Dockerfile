@@ -2,6 +2,8 @@ FROM php:8.1-apache
 
 ARG TIMEZONE
 
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
 RUN a2enmod rewrite
 
 
@@ -15,8 +17,6 @@ RUN apt-get update && \
 
 # Install PHP Extensions
 RUN docker-php-ext-install zip pdo_mysql
-
-COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 
 WORKDIR /var/www
 
